@@ -36,8 +36,9 @@ services:
       - redis
     networks:
       - earth
+      - bubble
     volumes:
-      - .:/app:rw
+      - .:/app
 
   ############################################
   #
@@ -59,7 +60,12 @@ services:
 
   redis:
     image: redis:5.0.5
+    networks:
+      - bubble
+
 
 networks:
+  bubble:
+    internal: True
   earth:
     external: True

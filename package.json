@@ -14,7 +14,7 @@
   "license": "MIT",
   "scripts": {
     "start:prod": "node api",
-    "start:dev": "nodemon --watch api api",
+    "start:dev": "nodemon --legacy-watch api api",
     "prettify": "eslint --fix && prettier --write ."
   },
   "pre-commit": "lint:staged",
