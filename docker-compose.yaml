@@ -1,0 +1,65 @@
+---
+version: "3.0"
+
+x-build: &x-build
+  context: .
+  dockerfile: Dockerfile
+
+services:
+  ############################################
+  #
+  # Prod and Dev Services
+  #
+  ############################################
+  api:
+    build:
+      <<: *x-build
+      args:
+        NODE_ENV: production
+    image: ffl-api
+    entrypoint: ["npm", "run", "start:prod"]
+    ports:
+      - "3000:3000"
+    depends_on:
+      - redis
+
+  api-dev:
+    build:
+      <<: *x-build
+      args:
+        NODE_ENV: development
+    image: ffl-api-dev
+    entrypoint: ["npm", "run", "start:dev"]
+    ports:
+      - "3000:3000"
+    depends_on:
+      - redis
+    networks:
+      - earth
+    volumes:
+      - .:/app:rw
+
+  ############################################
+  #
+  # Dev Tools
+  #
+  ############################################
+  dev-tool: &dev-tool
+    build:
+      <<: *x-build
+      args:
+        NODE_ENV: development
+    image: ffl-dev-tool
+    volumes:
+      - .:/app:rw
+
+  prettify:
+    <<: *dev-tool
+    entrypoint: ["npm", "run", "prettify"]
+
+  redis:
+    image: redis:5.0.5
+
+networks:
+  earth:
+    external: True
