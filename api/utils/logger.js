@@ -4,35 +4,46 @@ const chalk = require('chalk');
 const ip = require('ip');
 
 const divider = chalk.gray('\n-----------------------------------');
+const LogLevel = {
+    DEBUG: 0,
+    INFO: 1,
+    WARN: 2,
+    ERROR: 3,
+}
 
 /**
- * Logger middleware, you can customize it to make messages more personal
+ * Logger middleware
  */
 const logger = {
-  // Called whenever there's an error on the server we want to print
-  error: err => {
-    console.error(chalk.red(err));
+  logLevel: LogLevel.INFO,
+
+  setLogLevel: logLevel => {
+    this.logLevel = logLevel;
   },
 
-  // Called when express.js app starts on given port w/o errors
-  appStarted: (port, host, tunnelStarted) => {
-    console.log(`Server started ! ${chalk.green('✓')}`);
-
-    // If the tunnel started, log that and the URL it's available at
-    if (tunnelStarted) {
-      console.log(`Tunnel initialised ${chalk.green('✓')}`);
+  // Called whenever there's an error on the server we want to print
+  debug: msg => {
+    if (this.logLevel === LogLevel.DEBUG) {
+      console.debug(chalk.green(msg));
     }
-
-    console.log(`
-${chalk.bold('Access URLs:')}${divider}
-Localhost: ${chalk.magenta(`http://${host}:${port}`)}
-      LAN: ${chalk.magenta(`http://${ip.address()}:${port}`) +
-        (tunnelStarted
-          ? `\n    Proxy: ${chalk.magenta(tunnelStarted)}`
-          : '')}${divider}
-${chalk.blue(`Press ${chalk.italic('CTRL-C')} to stop`)}
-    `);
+  },
+  info: msg => {
+    if (this.logLevel <= LogLevel.INFO) {
+      console.info(chalk.blue(msg));
+    }
+  },
+  warn: msg => {
+    if (this.logLevel <= LogLevel.WARN) {
+      console.log(chalk.yellow(msg));
+    }
+  },
+  error: msg => {
+    // Just always log errors
+    console.error(chalk.red(msg));
   },
 };
 
-module.exports = logger;
+module.exports = {
+  logger,
+  LogLevel
+};

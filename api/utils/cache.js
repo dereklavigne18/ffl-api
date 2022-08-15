@@ -1,15 +1,20 @@
+// Packages
 const { Promise } = require('bluebird');
-const redis = require('redis');
+const { createClient } = require('redis');
 
-const REDIS_HOST = 'redis';
-const REDIS_PORT = 6379;
+// App Imports
+const { logger } = require('./logger');
 
+const REDIS_URL = 'redis://redis:6379';
 const TTL_UNIT_SECONDS = 'EX';
 
-const cache = redis.createClient({
-  host: REDIS_HOST,
-  port: REDIS_PORT,
+const cache = createClient({
+  url: REDIS_URL
 });
+logger.debug('Attempting to connect to Redis');
+cache.connect();
+logger.debug('Connected to redis');
+
 Promise.promisifyAll(cache);
 
 async function getSet({ key, loader, ttl }) {

@@ -6,6 +6,12 @@ const path = require("path");
 const { ApolloServer } = require("apollo-server");
 
 // Server Start
+const { logger, LogLevel } = require("./utils/logger");
+const environment = process.env.NODE_ENV;
+if (environment === "development") {
+  logger.setLogLevel(LogLevel.DEBUG);
+}
+
 const resolvers = require("./resolvers");
 const typeDefs = fs.readFileSync(
   path.resolve(__dirname, "schema.graphql"),
