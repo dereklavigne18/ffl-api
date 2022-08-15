@@ -1,3 +1,56 @@
 type Query {
-  hello: String!
+  currentWeek: Int!
+  currentSeason: Int!
+  seasons: [Season!]!
+  standings(year: Int!, week: Int!): StandingsRecord!
+  scoreboard(year: Int!, week: Int!): [Matchup!]!
+}
+
+type Season {
+  year: Int!
+  weeks: [Int!]!
+  postSeasonWeeks: [Int!]!
+}
+
+type StandingsRecord {
+  seasonWeek: SeasonWeek!
+  records: [TeamRecord!]!
+}
+
+type Matchup {
+  homeScore: MatchupScore!
+  awayScore: MatchupScore!
+}
+
+type MatchupScore {
+  teamRecord: TeamRecord!
+  points: Float!
+}
+
+type SeasonWeek {
+  year: Int!
+  week: Int!
+}
+
+type TeamRecord {
+  pointsAgainst: Float!
+  pointsFor: Float!
+  rank: Int
+  record: SeasonRecord!
+  team: Team!
+}
+
+type SeasonRecord {
+  wins: Int!
+  losses: Int!
+  ties: Int!
+}
+
+type Team {
+  name: String!
+  owner: User!
+}
+
+type User {
+  name: String!
 }

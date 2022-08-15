@@ -20,8 +20,10 @@
   "pre-commit": "lint:staged",
   "dependencies": {
     "apollo-server": "3.10.1",
+    "bluebird": "3.7.2",
     "graphql": "16.5.0",
     "graphql-tag": "2.12.6",
+    "ip": "1.1.8",
     "redis": "4.2.0"
   },
   "devDependencies": {
