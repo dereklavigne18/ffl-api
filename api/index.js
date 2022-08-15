@@ -25,5 +25,5 @@ server
     port: 3000,
   })
   .then(({ url }) => {
-    console.log("Hello! Visit us at " + url);
+    logger.info(`Server Started at ${url}`)
   });

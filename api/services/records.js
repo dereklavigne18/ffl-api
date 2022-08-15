@@ -1,3 +1,4 @@
+const { logger } = require('../utils/logger');
 const { range } = require('../utils/polyfills');
 const { getAllBoxscores } = require('./boxscores');
 
@@ -109,6 +110,8 @@ function calculateTeamRecords({ boxscores, week }) {
 }
 
 async function getRecords({ season, week }) {
+  logger.debug(`getRecords({ season: ${season}, week: ${week} })`);
+
   let calculatedWeek = week;
   if (week === 0) {
     calculatedWeek = 14;

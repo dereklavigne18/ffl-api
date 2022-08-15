@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const logger = require('../../utils/logger');
+const { logger } = require('../../utils/logger');
 
 const {
   ESPN_LEAGUE_ID,
@@ -19,7 +19,12 @@ class Client {
   }
 
   async get({ urlPath }) {
-    return fetch(ESPN_BASE_URL + urlPath, {
+    const url = ESPN_BASE_URL + urlPath;
+    logger.debug(`
+Attempting GET Request to ${url}...
+Cookies: espn_s2=${this.espnS2}; SWID=${this.swId};
+    `);
+    return fetch(url, {
       credentials: 'include',
       headers: { Cookie: `espn_s2=${this.espnS2}; SWID=${this.swId};` },
     });
@@ -30,7 +35,7 @@ class Client {
     const pathParams = `?scoringPeriodId=${week}&view=mTeam`;
     const urlPath = `${pathBase}${pathParams}`;
 
-    return this.get({ urlPath }).catch(logger.error);
+    return this.get({ urlPath }).catch(logger.error).then(logger.debug);
   }
 
   async getBoxscoresAtWeek({ season, week }) {
@@ -38,7 +43,7 @@ class Client {
     const pathParams = `?view=mMatchupScore&scoringPeriodId=${week}`;
     const urlPath = `${pathBase}${pathParams}`;
 
-    return this.get({ urlPath }).catch(logger.error);
+    return this.get({ urlPath }).catch(logger.error).then(logger.debug);
   }
 }
 

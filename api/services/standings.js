@@ -1,3 +1,4 @@
+const { logger } = require('../utils/logger');
 const { getObjectValues } = require('../utils/polyfills');
 const { getRecords } = require('./records');
 
@@ -38,6 +39,7 @@ function orderTeamsByRank(teams) {
 }
 
 async function calculateStandings({ season, week }) {
+  logger.debug(`calculateStandings({ season: ${season}, week: ${week} })`);
   return orderTeamsByRank(await getRecords({ season, week }));
 }
 
@@ -210,6 +212,7 @@ async function standingsBySeasonWeek({ year, week }) {
   // ];
 
   // eslint-disable-next-line no-unreachable
+  logger.debug(`standingsBySeasonWeek({ year: ${year}, week: ${week} })`);
   return calculateStandings({ season: year, week });
 
   // cache.set('test', 56);

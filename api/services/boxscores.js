@@ -1,3 +1,4 @@
+const { logger } = require('../utils/logger');
 const { range } = require('../utils/polyfills');
 
 const {
@@ -157,6 +158,8 @@ function calculateBoxscores({
 // }
 
 async function getAllBoxscores({ season, week }) {
+  logger.debug(`getAllBoxscores({ season: ${season}, week: ${week} })`);
+
   const espnBoxscores = await fetchEspnBoxscores({ season, week });
   const yahooBoxscores = await fetchYahooBoxscores({ season, week });
 
@@ -173,6 +176,8 @@ async function getAllBoxscores({ season, week }) {
 }
 
 async function getBoxscoresAtSeasonWeek({ season, week }) {
+  logger.debug(`getBoxscoresAtSeasonWeek({ season: ${season}, week: ${week} })`);
+
   const boxscores = await getAllBoxscores({ season, week });
   return boxscores[week];
 }

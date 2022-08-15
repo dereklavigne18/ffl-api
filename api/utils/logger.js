@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 
+// Packages
 const chalk = require('chalk');
 const ip = require('ip');
 
@@ -24,22 +25,26 @@ const logger = {
   // Called whenever there's an error on the server we want to print
   debug: msg => {
     if (this.logLevel === LogLevel.DEBUG) {
-      console.debug(chalk.green(msg));
+      const dt = new Date().toISOString();
+      console.debug(chalk.green(`${dt} DEBUG ${msg}`));
     }
   },
   info: msg => {
     if (this.logLevel <= LogLevel.INFO) {
-      console.info(chalk.blue(msg));
+      const dt = new Date().toISOString();
+      console.info(chalk.blue(`${dt} INFO ${msg}`));
     }
   },
   warn: msg => {
     if (this.logLevel <= LogLevel.WARN) {
-      console.log(chalk.yellow(msg));
+      const dt = new Date().toISOString();
+      console.log(chalk.yellow(`${dt} WARN ${msg}`));
     }
   },
   error: msg => {
     // Just always log errors
-    console.error(chalk.red(msg));
+    const dt = new Date().toISOString();
+    console.error(chalk.red(`${dt} ERROR ${msg}`));
   },
 };
 
