@@ -1,0 +1,54 @@
+{
+	"info": {
+		"_postman_id": "0f69c044-edde-49ab-9236-6fb3bb465430",
+		"name": "FFL-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22840379"
+	},
+	"item": [
+		{
+			"name": "Standings Query",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query ($year: Int!, $week: Int!) {\r\n  standings(year: $year, week: $week) {\r\n    seasonWeek {\r\n      week\r\n      year\r\n    }\r\n    records {\r\n      team {\r\n        name\r\n        owner {\r\n          name\r\n        }\r\n      }\r\n      rank\r\n      record {\r\n        wins\r\n        losses\r\n        ties\r\n      }\r\n      pointsFor\r\n      pointsAgainst\r\n    }\r\n  }\r\n}",
+						"variables": "{\r\n  \"year\": 2018,\r\n  \"week\": 14\r\n}"
+					}
+				},
+				"url": {
+					"raw": "localhost:3000",
+					"host": [
+						"localhost"
+					],
+					"port": "3000"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Scoreboard Query",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "fragment TeamRecordFields on TeamRecord {\r\n  team {\r\n    name\r\n    owner {\r\n      name\r\n    }\r\n  }\r\n  rank\r\n  record {\r\n    wins\r\n    losses\r\n    ties\r\n  }\r\n  pointsFor\r\n  pointsAgainst\r\n}\r\n\r\nquery ($year: Int!, $week: Int!) {\r\n  scoreboard(year: $year, week: $week) {\r\n    homeScore {\r\n      points\r\n      teamRecord {\r\n        ...TeamRecordFields\r\n      } \r\n    }\r\n    awayScore {\r\n      points\r\n      teamRecord {\r\n        ...TeamRecordFields\r\n      }\r\n    }\r\n  }\r\n}",
+						"variables": "{\r\n  \"year\": 2018,\r\n  \"week\": 14\r\n}"
+					}
+				},
+				"url": {
+					"raw": "localhost:3000",
+					"host": [
+						"localhost"
+					],
+					"port": "3000"
+				}
+			},
+			"response": []
+		}
+	]
+}
