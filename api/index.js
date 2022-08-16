@@ -12,18 +12,21 @@ if (environment === "development") {
   logger.setLogLevel(LogLevel.DEBUG);
 }
 
+const { cacheConnect } = require("./utils/cache");
 const resolvers = require("./resolvers");
 const typeDefs = fs.readFileSync(
   path.resolve(__dirname, "schema.graphql"),
   "utf-8"
 );
 
-const server = new ApolloServer({ typeDefs, resolvers });
+async function serverStarted({ url }) {
+  await cacheConnect();
+  logger.info(`Server Started at ${url}`);
+}
 
+const server = new ApolloServer({ typeDefs, resolvers });
 server
   .listen({
     port: 3000,
   })
-  .then(({ url }) => {
-    logger.info(`Server Started at ${url}`)
-  });
+  .then(serverStarted);

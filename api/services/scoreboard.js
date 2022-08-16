@@ -1,3 +1,5 @@
+const { logger } = require('../utils/logger');
+
 const { getBoxscoresAtSeasonWeek } = require('./boxscores');
 const { getRecords } = require('./records');
 
@@ -15,6 +17,7 @@ function addRecordsToBoxscores({ records, boxscore }) {
 }
 
 function calculateScoreboard({ records, boxscores }) {
+  logger.debug(`calculateScoreboard({ records: ${records}, boxscores: ${boxscores} })`);
   return boxscores.map(boxscore =>
     addRecordsToBoxscores({ records, boxscore }),
   );

@@ -1,3 +1,4 @@
+const { logger } = require('../utils/logger');
 const { getObjectValues } = require('../utils/polyfills');
 
 const { fetchEspnTeams, fetchYahooTeams } = require('./espnApi/teamsClient');

@@ -47,6 +47,7 @@ async function fetchBoxscores({ client, season, week }) {
   const response = await client
     .getBoxscoresAtWeek({ season, week })
     .catch(logger.error);
+
   return parseResponse(await response.json()).boxscores;
 }
 
@@ -58,7 +59,7 @@ async function fetchBoxscores({ client, season, week }) {
 //         teamId: 4,
 //         points: 101.7
 //       },
-//       away: { // Away is optional since by weeks won't include away teams
+//       away: { // Away is optional since bye weeks won't include away teams
 //         teamId: 7,
 //         points: 98.3
 //       }

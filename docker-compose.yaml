@@ -58,11 +58,27 @@ services:
     <<: *dev-tool
     entrypoint: ["npm", "run", "prettify"]
 
+  ############################################
+  #
+  # Database & Tools
+  #
+  ############################################
   redis:
     image: redis:7.0
+    restart: on-failure
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--port", "6379"]
     networks:
       - bubble
 
+  redis-cli:
+    image: redis:7.0
+    entrypoint: ["redis-cli", "-h", "redis", "-p", "6379"]
+    networks:
+      - bubble
+    depends_on:
+      - redis
 
 networks:
   bubble:

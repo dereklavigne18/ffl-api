@@ -5,25 +5,39 @@ const { createClient } = require('redis');
 // App Imports
 const { logger } = require('./logger');
 
-const REDIS_URL = 'redis://redis:6379';
+const REDIS_HOST = 'redis';
+const REDIS_PORT = 6379;
 const TTL_UNIT_SECONDS = 'EX';
 
-const cache = createClient({
-  url: REDIS_URL
-});
-logger.debug('Attempting to connect to Redis');
-cache.connect();
-logger.debug('Connected to redis');
+var cache = null;
 
-Promise.promisifyAll(cache);
+async function cacheConnect() {
+  if (cache) {
+    return;
+  }
+
+  cache = createClient({
+    socket: {
+      host: REDIS_HOST,
+      port: REDIS_PORT,
+      connectionTimeout: 10000, // in ms
+    }
+  });
+  logger.debug('Attempting to connect to Redis');
+  await cache.connect();
+  logger.debug('Connected to redis');
+}
 
 async function getSet({ key, loader, ttl }) {
   logger.debug(`getSet({ key: ${key}, loader: ${loader}, ttl: ${ttl} })`);
+  if (!cache) {
+    logger.error("Cache client has not connected.")
+  }
 
   logger.debug(`Checking if key exists - ${key}`);
-  if (await cache.existsAsync(key)) {
+  if (await cache.exists(key)) {
     logger.debug(`Key Exists - Loading key - ${key}`);
-    const found = await cache.getAsync(key);
+    const found = await cache.get(key);
     logger.debug(`Loaded key - ${found}`);
     return JSON.parse(found);
   }
@@ -31,12 +45,13 @@ async function getSet({ key, loader, ttl }) {
   logger.debug(`Falling back on loader - ${ loader }`);
   const loaded = await loader();
   logger.debug(`Load finished (setting cache) - ${loaded}`);
-  cache.setAsync(key, JSON.stringify(loaded), TTL_UNIT_SECONDS, ttl);
+  cache.set(key, JSON.stringify(loaded), TTL_UNIT_SECONDS, ttl);
   logger.debug(`Cache Set`);
 
   return loaded;
 }
 
 module.exports = {
+  cacheConnect,
   getSet,
 };

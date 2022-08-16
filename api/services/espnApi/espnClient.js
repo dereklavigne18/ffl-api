@@ -35,7 +35,7 @@ Cookies: espn_s2=${this.espnS2}; SWID=${this.swId};
     const pathParams = `?scoringPeriodId=${week}&view=mTeam`;
     const urlPath = `${pathBase}${pathParams}`;
 
-    return this.get({ urlPath }).catch(logger.error).then(logger.debug);
+    return this.get({ urlPath }).catch(logger.error);
   }
 
   async getBoxscoresAtWeek({ season, week }) {
@@ -43,7 +43,7 @@ Cookies: espn_s2=${this.espnS2}; SWID=${this.swId};
     const pathParams = `?view=mMatchupScore&scoringPeriodId=${week}`;
     const urlPath = `${pathBase}${pathParams}`;
 
-    return this.get({ urlPath }).catch(logger.error).then(logger.debug);
+    return this.get({ urlPath }).catch(logger.error);
   }
 }
 

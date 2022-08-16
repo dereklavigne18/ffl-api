@@ -179,7 +179,12 @@ async function getBoxscoresAtSeasonWeek({ season, week }) {
   logger.debug(`getBoxscoresAtSeasonWeek({ season: ${season}, week: ${week} })`);
 
   const boxscores = await getAllBoxscores({ season, week });
-  return boxscores[week];
+  let calculatedWeek = 1;
+  if (week !== 1) {
+    calculatedWeek = week - 1;
+  }
+
+  return boxscores[calculatedWeek];
 }
 
 module.exports = {
