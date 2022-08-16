@@ -1,6 +1,7 @@
 const { logger } = require('../utils/logger');
 const { range } = require('../utils/polyfills');
 const { getAllBoxscores } = require('./boxscores');
+const { getLastWeekOfSeason } = require('./timePeriods');
 
 const LAST_WEEK_OF_REGULAR_SEASON = 13;
 
@@ -93,10 +94,11 @@ function addWeekResultsToTeamRecords({ teamRecords, boxscores }) {
   );
 }
 
-function calculateTeamRecords({ boxscores, week }) {
+function calculateTeamRecords({ boxscores, week, season }) {
+  const lastWeekOfSeason = getLastWeekOfSeason(season);
   let lastWeekToCount = week;
-  if (week > LAST_WEEK_OF_REGULAR_SEASON) {
-    lastWeekToCount = LAST_WEEK_OF_REGULAR_SEASON + 1;
+  if (week > lastWeekOfSeason) {
+    lastWeekToCount = lastWeekOfSeason + 1;
   }
 
   return range(1, lastWeekToCount).reduce(
@@ -118,7 +120,7 @@ async function getRecords({ season, week }) {
   }
 
   const boxscores = await getAllBoxscores({ season, week });
-  return calculateTeamRecords({ boxscores, week: calculatedWeek });
+  return calculateTeamRecords({ boxscores, week: calculatedWeek, season });
 }
 
 module.exports = {
