@@ -58,6 +58,10 @@ services:
     <<: *dev-tool
     entrypoint: ["npm", "run", "prettify"]
 
+  lock-packages:
+    <<: *dev-tool
+    entrypoint: ["cp", "/etc/ffl-api/package-lock.json", "/app/"]
+
   ############################################
   #
   # Database & Tools
