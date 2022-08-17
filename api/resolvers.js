@@ -8,16 +8,16 @@ const {
 
 module.exports = {
   Query: {
-    currentWeek: getCurrentWeek,
-    currentSeason: getCurrentSeason,
-    seasons: getSeasons,
+    currentWeek: () => getCurrentWeek(),
+    currentSeason: () => getCurrentSeason(),
+    seasons: () => getSeasons(),
     scoreboard: async (obj, args) => scoreboard.getScoreboard({ ...args }),
     standings: async (obj, args) => ({
       seasonWeek: {
         year: args.year,
         week: args.week,
       },
-      records: await standings.standingsBySeasonWeek({ ...args }),
+      records: () => standings.standingsBySeasonWeek({ ...args }),
     }),
   },
 };

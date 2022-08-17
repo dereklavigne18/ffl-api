@@ -37,12 +37,10 @@ function addOwnersToTeams(teams) {
 }
 
 async function getEspnTeams({ season, week }) {
-  logger.debug(`getEspnTeams({ season: ${season}, week: ${week} })`);
   return addOwnersToTeams(await fetchEspnTeams({ season, week }));
 }
 
 async function getYahooTeams({ season, week }) {
-  logger.debug(`getYahooTeams({ season: ${season}, week: ${week} })`);
   return addOwnersToTeams(await fetchYahooTeams({ season, week }));
 }
 

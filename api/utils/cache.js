@@ -29,24 +29,17 @@ async function cacheConnect() {
 }
 
 async function getSet({ key, loader, ttl }) {
-  logger.debug(`getSet({ key: ${key}, loader: ${loader}, ttl: ${ttl} })`);
   if (!cache) {
     logger.error("Cache client has not connected.")
   }
 
-  logger.debug(`Checking if key exists - ${key}`);
   if (await cache.exists(key)) {
-    logger.debug(`Key Exists - Loading key - ${key}`);
     const found = await cache.get(key);
-    logger.debug(`Loaded key - ${found}`);
     return JSON.parse(found);
   }
 
-  logger.debug(`Falling back on loader - ${ loader }`);
   const loaded = await loader();
-  logger.debug(`Load finished (setting cache) - ${loaded}`);
   cache.set(key, JSON.stringify(loaded), TTL_UNIT_SECONDS, ttl);
-  logger.debug(`Cache Set`);
 
   return loaded;
 }

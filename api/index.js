@@ -10,6 +10,9 @@ const { logger, LogLevel } = require("./utils/logger");
 const environment = process.env.NODE_ENV;
 if (environment === "development") {
   logger.setLogLevel(LogLevel.DEBUG);
+
+  const { hookDebugging } = require("./utils/debugging");
+  hookDebugging();
 }
 
 const { cacheConnect } = require("./utils/cache");

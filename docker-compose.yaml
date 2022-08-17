@@ -53,6 +53,7 @@ services:
     image: ffl-dev-tool
     volumes:
       - .:/app:rw
+      - ./package.json:/etc/ffl-api/package.json:rw
 
   prettify:
     <<: *dev-tool
@@ -60,7 +61,10 @@ services:
 
   lock-packages:
     <<: *dev-tool
-    entrypoint: ["cp", "/etc/ffl-api/package-lock.json", "/app/"]
+    entrypoint: >
+      sh -c "rm -rf /etc/ffl-api/node_modules /etc/ffl-api/package-lock.json
+             && npm install --prefix /etc/ffl-api
+             && cp /etc/ffl-api/package-lock.json /app/"
 
   ############################################
   #

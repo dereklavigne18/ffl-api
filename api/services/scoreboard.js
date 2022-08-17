@@ -17,7 +17,6 @@ function addRecordsToBoxscores({ records, boxscore }) {
 }
 
 function calculateScoreboard({ records, boxscores }) {
-  logger.debug(`calculateScoreboard({ records: ${records}, boxscores: ${boxscores} })`);
   return boxscores.map(boxscore =>
     addRecordsToBoxscores({ records, boxscore }),
   );

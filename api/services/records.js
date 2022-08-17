@@ -112,8 +112,6 @@ function calculateTeamRecords({ boxscores, week, season }) {
 }
 
 async function getRecords({ season, week }) {
-  logger.debug(`getRecords({ season: ${season}, week: ${week} })`);
-
   let calculatedWeek = week;
   if (week === 0) {
     calculatedWeek = 14;
