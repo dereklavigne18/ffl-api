@@ -1115,7 +1115,7 @@ const interleagueMatchups = {
       },
       {
         yahooTeamId: 4,
-        espnTeamId: 8,
+        espnTeamId: 4,
       },
       {
         yahooTeamId: 7,
@@ -1141,7 +1141,7 @@ const interleagueMatchups = {
       },
       {
         yahooTeamId: 8,
-        espnTeamId: 1,
+        espnTeamId: 2,
       },
       {
         yahooTeamId: 10,
