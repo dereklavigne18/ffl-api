@@ -2,33 +2,33 @@ const { getEspnLeagueClient, getYahooLeagueClient } = require('./espnClient');
 const { getSet } = require('../../utils/cache');
 const { logger } = require('../../utils/logger');
 
-function constructTeamScore(teamScore) {
+function constructTeamScore(teamScore, leagueName) {
   let pointsLive = 0;
   if (teamScore.totalPointsLive) {
     pointsLive = +teamScore.totalPointsLive.toFixed(1);
   }
 
   return {
-    teamId: teamScore.teamId,
+    teamId: `${leagueName}:${teamScore.teamId}`,
     points: +teamScore.totalPoints.toFixed(1),
     pointsLive,
   };
 }
 
-function constructBoxscore(boxscore) {
+function constructBoxscore(boxscore, leagueName) {
   return {
-    home: constructTeamScore(boxscore.home),
-    away: 'away' in boxscore ? constructTeamScore(boxscore.away) : null,
+    home: constructTeamScore(boxscore.home, leagueName),
+    away: 'away' in boxscore ? constructTeamScore(boxscore.away, leagueName) : null,
   };
 }
 
-function constructBoxscores(schedule) {
+function constructBoxscores(schedule, leagueName) {
   return schedule.reduce((boxscores, score) => {
     const scores =
       score.matchupPeriodId in boxscores
         ? boxscores[score.matchupPeriodId]
         : [];
-    scores.push(constructBoxscore(score));
+    scores.push(constructBoxscore(score, leagueName));
 
     const clonedBoxscores = { ...boxscores };
     clonedBoxscores[score.matchupPeriodId] = scores;
@@ -37,18 +37,20 @@ function constructBoxscores(schedule) {
   }, {});
 }
 
-function parseResponse(response) {
+function parseResponse(response, leagueName) {
   return {
-    boxscores: constructBoxscores(response.schedule),
+    boxscores: constructBoxscores(response.schedule, leagueName),
   };
 }
 
-async function fetchBoxscores({ client, season, week }) {
+async function fetchBoxscores({ leagueName, season, week }) {
+  const client = leagueName == 'ESPN' ? getEspnLeagueClient() : getYahooLeagueClient();
+
   const response = await client
     .getBoxscoresAtWeek({ season, week })
     .catch(logger.error);
 
-  return parseResponse(await response.json()).boxscores;
+  return parseResponse(await response.json(), leagueName).boxscores;
 }
 
 // Both of the below function return data in the format:
@@ -80,7 +82,7 @@ async function fetchEspnBoxscores({ season, week }) {
     key: `fetchEspnBoxscores.${season}.${week}`,
     ttl: 60 * 60,
     loader: async () =>
-      fetchBoxscores({ client: getEspnLeagueClient(), season, week }),
+      fetchBoxscores({ leagueName: "ESPN", season, week }),
   });
 }
 
@@ -96,7 +98,7 @@ async function fetchYahooBoxscores({ season, week }) {
     key: `fetchYahooBoxscores.${season}.${week}`,
     ttl: 60 * 60,
     loader: async () =>
-      fetchBoxscores({ client: getYahooLeagueClient(), season, week }),
+      fetchBoxscores({ leagueName: "YAHOO", season, week }),
   });
 }
 

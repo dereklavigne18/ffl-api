@@ -54,11 +54,11 @@ function mergeBoxscoresForInterleagueWeek({
   return matchups.map(matchup => {
     const espnBoxscore = findBoxscoreForHomeTeam(
       espnBoxscores,
-      matchup.espnTeamId,
+      `ESPN:${matchup.espnTeamId}`,
     );
     const yahooBoxscore = findBoxscoreForHomeTeam(
       yahooBoxscores,
-      matchup.yahooTeamId,
+      `YAHOO:${matchup.yahooTeamId}`,
     );
 
     return {

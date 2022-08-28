@@ -47,6 +47,7 @@ type SeasonRecord {
 }
 
 type Team {
+  id: ID!
   name: String!
   owner: User!
 }
