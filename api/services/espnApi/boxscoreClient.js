@@ -80,7 +80,7 @@ async function fetchBoxscores({ leagueName, season, week }) {
 async function fetchEspnBoxscores({ season, week }) {
   return getSet({
     key: `fetchEspnBoxscores.${season}.${week}`,
-    ttl: 60 * 60,
+    ttl: 60 * 5,
     loader: async () =>
       fetchBoxscores({ leagueName: "ESPN", season, week }),
   });
@@ -96,7 +96,7 @@ async function fetchEspnBoxscores({ season, week }) {
 async function fetchYahooBoxscores({ season, week }) {
   return getSet({
     key: `fetchYahooBoxscores.${season}.${week}`,
-    ttl: 60 * 60,
+    ttl: 60 * 5,
     loader: async () =>
       fetchBoxscores({ leagueName: "YAHOO", season, week }),
   });

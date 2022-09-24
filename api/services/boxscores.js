@@ -1249,4 +1249,48 @@ const interleagueMatchups = {
       },
     ],
   },
+  2022: {
+    3: [
+      {
+        yahooTeamId: 10,
+        espnTeamId: 6,
+      },
+      {
+        yahooTeamId: 3,
+        espnTeamId: 1,
+      },
+      {
+        yahooTeamId: 1,
+        espnTeamId: 2,
+      },
+      {
+        yahooTeamId: 6,
+        espnTeamId: 4,
+      },
+      {
+        yahooTeamId: 5,
+        espnTeamId: 3,
+      },
+      {
+        yahooTeamId: 2,
+        espnTeamId: 7,
+      },
+      {
+        yahooTeamId: 11,
+        espnTeamId: 5,
+      },
+      {
+        yahooTeamId: 8,
+        espnTeamId: 10,
+      },
+      {
+        yahooTeamId: 7,
+        espnTeamId: 8,
+      },
+      {
+        yahooTeamId: 4,
+        espnTeamId: 9,
+      },
+    ]
+  },
 };
