@@ -18,10 +18,11 @@ services:
         NODE_ENV: production
     image: ffl-api
     entrypoint: ["npm", "run", "start:prod"]
-    ports:
-      - "3000:3000"
     depends_on:
       - redis
+    networks:
+      - bubble
+      - earth
 
   api-dev:
     build:
@@ -30,13 +31,11 @@ services:
         NODE_ENV: development
     image: ffl-api-dev
     entrypoint: ["npm", "run", "start:dev"]
-    ports:
-      - "3000:3000"
     depends_on:
       - redis
     networks:
-      - earth
       - bubble
+      - earth
     volumes:
       - .:/app
 
@@ -62,9 +61,7 @@ services:
   lock-packages:
     <<: *dev-tool
     entrypoint: >
-      sh -c "rm -rf /etc/ffl-api/node_modules /etc/ffl-api/package-lock.json
-             && npm install --prefix /etc/ffl-api
-             && cp /etc/ffl-api/package-lock.json /app/"
+      sh -c "rm -rf /etc/ffl-api/node_modules /etc/ffl-api/package-lock.json && npm install --prefix /etc/ffl-api && cp /etc/ffl-api/package-lock.json /app/"
 
   ############################################
   #
@@ -74,8 +71,6 @@ services:
   redis:
     image: redis:7.0
     restart: on-failure
-    ports:
-      - "6379:6379"
     command: ["redis-server", "--port", "6379"]
     networks:
       - bubble
