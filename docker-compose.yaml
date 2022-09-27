@@ -1,10 +1,6 @@
 ---
 version: "3.0"
 
-x-build: &x-build
-  context: .
-  dockerfile: Dockerfile
-
 services:
   ############################################
   #
@@ -13,7 +9,7 @@ services:
   ############################################
   api:
     build:
-      <<: *x-build
+      context: .
       args:
         NODE_ENV: production
     image: ffl-api
@@ -26,7 +22,7 @@ services:
 
   api-dev:
     build:
-      <<: *x-build
+      context: .
       args:
         NODE_ENV: development
     image: ffl-api-dev
@@ -46,7 +42,7 @@ services:
   ############################################
   dev-tool: &dev-tool
     build:
-      <<: *x-build
+      context: .
       args:
         NODE_ENV: development
     image: ffl-dev-tool

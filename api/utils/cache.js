@@ -39,7 +39,8 @@ async function getSet({ key, loader, ttl }) {
   }
 
   const loaded = await loader();
-  cache.set(key, JSON.stringify(loaded), TTL_UNIT_SECONDS, ttl);
+  cache.set(key, JSON.stringify(loaded));
+  cache.expire(key, ttl);
 
   return loaded;
 }
