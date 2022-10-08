@@ -114,7 +114,7 @@ function calculateTeamRecords({ boxscores, week, season }) {
 async function getRecords({ season, week }) {
   let calculatedWeek = week;
   if (week === 0) {
-    calculatedWeek = 14;
+    calculatedWeek = getLastWeekOfSeason(season) + 1;
   }
 
   const boxscores = await getAllBoxscores({ season, week });
