@@ -8,7 +8,7 @@ Yahoo Team Ids
 6. Semeter
 7. Scotty
 8. Robby
-9. Sully
+9. Sully (Gone)
 10. Wasko/Ed
 11. Colin
 
