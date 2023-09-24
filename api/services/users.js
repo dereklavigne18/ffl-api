@@ -47,7 +47,7 @@ const users = {
   '{7D601BE5-F0D4-4D4B-96B1-9BD39E924666}': {
     id: '{7D601BE5-F0D4-4D4B-96B1-9BD39E924666}',
     username: 'mikemiceli28',
-    name: 'Mike Miceli',
+    name: 'Tom Miceli',
   },
   '{B1E4E349-29C9-4B7E-BDA8-97F1AE59D81D}': {
     id: '{B1E4E349-29C9-4B7E-BDA8-97F1AE59D81D}',

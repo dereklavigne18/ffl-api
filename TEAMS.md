@@ -1,7 +1,7 @@
 Yahoo Team Ids
 
 1. Mac
-2. Miceli
+2. Miceli/Tom
 3. Daley/Teddy
 4. Derek
 5. Smitty
@@ -18,7 +18,7 @@ ESPN Team Ids
 1. Ciampi
 2. Devin
 3. Tommy
-4. Donny/Cobb
+4. Donny/Cobb/Alek
 5. Shrin
 6. Alek/Robbie
 7. Brian

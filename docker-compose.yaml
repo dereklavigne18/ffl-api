@@ -28,6 +28,8 @@ services:
         NODE_ENV: development
     image: ffl-api-dev
     entrypoint: ["npm", "run", "start:dev"]
+    ports:
+      - "3000:3000"
     depends_on:
       - redis
     networks:
